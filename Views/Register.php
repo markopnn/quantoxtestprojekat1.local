@@ -1,5 +1,8 @@
 <?php
 include("Controller/registerController.php");
+if($_SESSION['email'] != '') {
+    header('location: index.php?page=success');
+}
 ?>
 <div class="row">
     <div class="col-lg-12">
