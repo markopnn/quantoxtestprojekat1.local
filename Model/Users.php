@@ -35,7 +35,7 @@ class Users extends Database {
             $auth = password_verify($password, $result['password']);
             if ($auth == TRUE) {
                 $_SESSION['email'] =  $result['email'];
-                header('Location: index.php');
+                header('Location: index.php?page=success');
                 exit;
              }
         } else {

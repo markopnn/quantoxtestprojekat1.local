@@ -1,8 +1,5 @@
 <?php
 session_start();
-if(!isset($_SESSION['email'])=='') {
-    echo "Hello world";
-}
 
 function __autoload($class) {
     require_once "Config/$class.php";
@@ -20,6 +17,9 @@ switch($page){
         break;
     case "logout":
         include "Views/Logout.php";
+        break;
+    case "success":
+        include "Views/Success.php";
         break;
     default:
         include "Views/Login.php";
