@@ -3,18 +3,25 @@
 class Users extends Database {
 
     public function registerUser($email,$password) {
-        $stmt = $this->connect()->prepare("INSERT INTO users (email,password) VALUES (:email,:password);");
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $password);
-        $result = $stmt->execute();
+        $checkEmail = $this->connect()->prepare("SELECT email from users WHERE email=? LIMIT 1");
+        $checkEmail->execute(array($email));
+        $result = $checkEmail->fetch();
+        if($result != TRUE) {
+            $stmt = $this->connect()->prepare("INSERT INTO users (email,password) VALUES (:email,:password);");
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':password', $password);
+            $result = $stmt->execute();
 
-        $success = [];
-        if($result == TRUE) {
-            $success[] = "successful registration";
-        }
-        if(count($success) > 0) {
-            foreach ($success as $msg)
-            echo $msg;
+            $success = [];
+            if ($result == TRUE) {
+                $success[] = "successful registration";
+            }
+            if (count($success) > 0) {
+                foreach ($success as $msg)
+                    echo $msg;
+            }
+        }else {
+            echo "Email exists";
         }
     }
 
@@ -31,6 +38,8 @@ class Users extends Database {
                 header('Location: index.php');
                 exit;
              }
+        } else {
+            Echo "Check email or password";
         }
     }
 }
