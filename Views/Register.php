@@ -1,7 +1,9 @@
 <?php
-include("Controller/registerController.php");
-if($_SESSION['email'] != '') {
-    header('location: index.php?page=success');
+include("Controller/RegisterController.php");
+if(isset($_SESSION['email'])) {
+    if ($_SESSION['email'] != '') {
+        header('Location: index.php?page=success');
+    }
 }
 ?>
 <div class="row">

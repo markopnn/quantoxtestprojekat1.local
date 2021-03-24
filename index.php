@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+require_once  'vendor/autoload.php';
 function __autoload($class) {
     require_once "Config/$class.php";
 }

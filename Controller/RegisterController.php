@@ -1,6 +1,6 @@
 <?php
 
-include_once "Model/Users.php";
+include_once "Model/User.php";
 
 
 if(isset($_POST['btnRegister'])){

@@ -1,8 +1,9 @@
 <?php
 
+include ('Config/Database.php');
 class Users extends Database {
 
-    public function registerUser($email,$password) {
+    public function RegisterUser($email,$password) {
         $checkEmail = $this->connect()->prepare("SELECT email from users WHERE email=? LIMIT 1");
         $checkEmail->execute(array($email));
         $result = $checkEmail->fetch();
@@ -25,7 +26,7 @@ class Users extends Database {
         }
     }
 
-    public function loginUser($email,$password)
+    public function LoginUser($email,$password)
     {
         $stmt = $this->connect()->prepare("SELECT * FROM users WHERE email=? LIMIT 1 ");
         $stmt->execute(array($email));
