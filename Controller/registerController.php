@@ -4,12 +4,19 @@ include_once "Model/Users.php";
 
 
 if(isset($_POST['btnRegister'])){
+        $errors= [];
+
         $email = trim($_POST['email']);
         $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
-        $errors= [];
+        $regex = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
+
         if($email == '') {
           $errors[] = "Check email";
+        }
+
+        if (!preg_match($regex, $email)) {
+            $errors[] = "Invalid email format";
         }
 
         if(count($errors) > 0) {
