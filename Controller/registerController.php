@@ -13,9 +13,7 @@ if(isset($_POST['btnRegister'])){
 
         if($email == '') {
           $errors[] = "Check email";
-        }
-
-        if (!preg_match($regex, $email)) {
+        }elseif (!preg_match($regex, $email)) {
             $errors[] = "Invalid email format";
         }
 
