@@ -1,40 +1,29 @@
-
 <?php
 session_start();
-function __autoload($class) {
-    require_once "class/$class.php";
+if(!isset($_SESSION['email'])=='') {
+    echo "Hello world";
 }
-include('class/Login.php');
+
+function __autoload($class) {
+    require_once "Config/$class.php";
+}
+
+$page = "";
+if(isset($_GET['page'])){
+    $page = $_GET['page'];
+}
+include "Views/Components/Header.php";
+include "Views/Components/Nav.php";
+switch($page){
+    case "register":
+        include "Views/Register.php";
+        break;
+    case "logout":
+        include "Views/Logout.php";
+        break;
+    default:
+        include "Views/Login.php";
+        break;
+}
+include "Views/Components/Footer.php";
 ?>
-<html>
-	<head>
-		<title>Login page</title></head>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<body>
-        <div class="container">
-            <h1>Hello world</h1>
-            <div class="main">
-                <div class="col-md-6 col-sm-12">
-                    <div class="login-form pt-6">
-                        <form method="post" action="http://quantoxtestprojekat1.local/">
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input type="text" class="form-control" placeholder="User Name" name="email">
-                            </div>
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" class="form-control" placeholder="Password" name="password">
-                            </div>
-                            <?php if (isset($_SESSION['error']))  { ?>
-                                <div class="alert alert-danger" role="alert">
-                                    <?php echo $_SESSION['error'] ;?>
-                                </div>
-                            <?php }?>
-                            <button type="submit" class="btn btn-secondary" name="btnLogin">Login</button>
-                        </form>
-                    </div>
-                </div>
-              </div>
-            <div>
-	</body>
-</html>
