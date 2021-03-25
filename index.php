@@ -21,6 +21,15 @@ switch($page){
     case "success":
         include "Views/Success.php";
         break;
+    case "user":
+        include "Views/User.php";
+        break;
+    case "edit":
+        include "Views/Edit.php";
+        break;
+    case "delete":
+        include "Controller/DeleteController.php";
+        break;
     default:
         include "Views/Login.php";
         break;
