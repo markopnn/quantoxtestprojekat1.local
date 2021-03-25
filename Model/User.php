@@ -14,8 +14,10 @@ include ('Config/Database.php');
 class Users extends Database {
 
     /**
+     *
      * @param string $email
      * @param string $password
+     *
      */
     public function RegisterUser($email,$password) {
         $checkEmail = $this->connect()->prepare("SELECT email from users WHERE email=? LIMIT 1");

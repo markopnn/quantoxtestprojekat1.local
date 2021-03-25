@@ -18,7 +18,9 @@ $dotenv->load();
 class Database {
 
     /**
+     *
      * @return PDO
+     * 
      */
     public function connect() {
 
