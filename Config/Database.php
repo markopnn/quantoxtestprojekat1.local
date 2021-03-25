@@ -1,11 +1,27 @@
 <?php
 
 
-$dotenv =  $dotenv = Dotenv\Dotenv::createImmutable($_SERVER['DOCUMENT_ROOT']);
+$dotenv = Dotenv\Dotenv::createImmutable($_SERVER['DOCUMENT_ROOT']);
 $dotenv->load();
 
+
+/**
+ * Class Database
+ * The class is database connection.
+ *
+ * @package    quantoxtestprojekat1.local
+ * @author     Marko Milojkovic <marko.milojkovic@quantox.com>
+ *
+ *
+ */
+
 class Database {
+
+    /**
+     * @return PDO
+     */
     public function connect() {
+
         $servername = $_ENV['DB_SERVER'];
         $username = $_ENV['DB_USER'];
         $password = $_ENV['DB_PASS'];
@@ -21,6 +37,4 @@ class Database {
 
     }
 }
-
-
 ?>

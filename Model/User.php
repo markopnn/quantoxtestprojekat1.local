@@ -1,8 +1,22 @@
 <?php
 
 include ('Config/Database.php');
+
+/**
+ * Class Users
+ * The class use for login and register user.
+ *
+ * @package    quantoxtestprojekat1.local
+ * @author     Marko Milojkovic <marko.milojkovic@quantox.com>
+ *
+ *
+ */
 class Users extends Database {
 
+    /**
+     * @param string $email
+     * @param string $password
+     */
     public function RegisterUser($email,$password) {
         $checkEmail = $this->connect()->prepare("SELECT email from users WHERE email=? LIMIT 1");
         $checkEmail->execute(array($email));
@@ -26,8 +40,13 @@ class Users extends Database {
         }
     }
 
+    /**
+     * @param string $email
+     * @param string $password
+     */
     public function LoginUser($email,$password)
     {
+
         $stmt = $this->connect()->prepare("SELECT * FROM users WHERE email=? LIMIT 1 ");
         $stmt->execute(array($email));
         $result = $stmt->fetch();
