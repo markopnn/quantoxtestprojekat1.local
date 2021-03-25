@@ -1,7 +1,7 @@
 <?php
 
 
-$dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv =  $dotenv = Dotenv\Dotenv::createImmutable($_SERVER['DOCUMENT_ROOT']);
 $dotenv->load();
 
 class Database {
