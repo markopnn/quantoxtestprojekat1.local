@@ -17,26 +17,31 @@ $dotenv->load();
 
 class Database {
 
-    /**
-     *
-     * @return PDO
-     * 
-     */
-    public function connect() {
+    private static $instance = null;
+    private $conn;
 
-        $servername = $_ENV['DB_SERVER'];
-        $username = $_ENV['DB_USER'];
-        $password = $_ENV['DB_PASS'];
-        $db_name = $_ENV['DB_NAME'];
 
-        try {
-            $conn = new PDO("mysql:host=$servername;dbname=$db_name",$username,$password);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            return $conn;
-        } catch (PDOException $e) {
-            echo "Connection failed: " . $e->getMessage();
+
+    public function __construct()
+    {
+        $this->conn = new PDO("mysql:host={$_ENV['DB_SERVER']};
+    dbname={$_ENV['DB_NAME']}", $_ENV['DB_USER'],$_ENV['DB_PASS'],
+            array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
+    }
+
+    public static function getInstance()
+    {
+        if(!self::$instance)
+        {
+            self::$instance = new Database();
         }
 
+        return self::$instance;
+    }
+
+    public function getConnection()
+    {
+        return $this->conn;
     }
 }
 ?>

@@ -20,11 +20,11 @@ class Users extends Database {
      *
      */
     public function RegisterUser($email,$password) {
-        $checkEmail = $this->connect()->prepare("SELECT email from users WHERE email=? LIMIT 1");
+        $checkEmail = $this->getConnection()->prepare("SELECT email from users WHERE email=? LIMIT 1");
         $checkEmail->execute(array($email));
         $result = $checkEmail->fetch();
         if($result != TRUE) {
-            $stmt = $this->connect()->prepare("INSERT INTO users (email,password) VALUES (:email,:password);");
+            $stmt = $this->getConnection()->prepare("INSERT INTO users (email,password) VALUES (:email,:password);");
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':password', $password);
             $result = $stmt->execute();
@@ -49,7 +49,7 @@ class Users extends Database {
     public function LoginUser($email,$password)
     {
 
-        $stmt = $this->connect()->prepare("SELECT * FROM users WHERE email=? LIMIT 1 ");
+        $stmt = $this->getConnection()->prepare("SELECT * FROM users WHERE email=? LIMIT 1 ");
         $stmt->execute(array($email));
         $result = $stmt->fetch();
 
@@ -72,7 +72,7 @@ class Users extends Database {
      */
     public function ListUser() {
         $stmt = "SELECT * FROM users";
-        $result = $this->connect()->query($stmt);
+        $result = $this->getConnection()->query($stmt);
 
         if($result->rowCount() > 0){
             while($row = $result->fetch()){
@@ -88,7 +88,7 @@ class Users extends Database {
      */
     public function ShowUser($id) {
         $stmt = "SELECT * FROM users WHERE id=$id LIMIT 1";
-        $result = $this->connect()->query($stmt);
+        $result = $this->getConnection()->query($stmt);
 
         if($result->rowCount() > 0){
             while($row = $result->fetch()){
@@ -104,7 +104,7 @@ class Users extends Database {
      * @param $editPassword
      */
     public function EditUserWithPassword($email,$id,$editPassword) {
-        $stmt = $this->connect()->prepare( "UPDATE users SET email= :email, password = :editPassword WHERE id= :id");
+        $stmt = $this->getConnection()->prepare( "UPDATE users SET email= :email, password = :editPassword WHERE id= :id");
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':editPassword', $editPassword);
@@ -125,7 +125,7 @@ class Users extends Database {
      * @param $id
      */
     public function EditUserWithoutPassword($email,$id) {
-        $stmt = $this->connect()->prepare( "UPDATE users SET email= :email WHERE id= :id");
+        $stmt = $this->getConnection()->prepare( "UPDATE users SET email= :email WHERE id= :id");
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':id', $id);
         $result = $stmt->execute();
@@ -144,7 +144,7 @@ class Users extends Database {
      * @param $id
      */
     public function DeleteUser($id) {
-        $stmt = $this->connect()->prepare( "DELETE FROM users WHERE id= :id");
+        $stmt = $this->getConnection()->prepare( "DELETE FROM users WHERE id= :id");
         $stmt->bindParam(':id', $id);
         try{
             $result = $stmt->execute();
