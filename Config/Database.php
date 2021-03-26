@@ -21,7 +21,9 @@ class Database {
     private $conn;
 
 
-
+    /**
+     * Database constructor.
+     */
     public function __construct()
     {
         $this->conn = new PDO("mysql:host={$_ENV['DB_SERVER']};
@@ -29,6 +31,9 @@ class Database {
             array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
     }
 
+    /**
+     * @return Database|null
+     */
     public static function getInstance()
     {
         if(!self::$instance)
@@ -39,6 +44,9 @@ class Database {
         return self::$instance;
     }
 
+    /**
+     * @return PDO
+     */
     public function getConnection()
     {
         return $this->conn;
