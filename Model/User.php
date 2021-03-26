@@ -19,14 +19,15 @@ class Users extends Database {
      * @param string $password
      *
      */
-    public function RegisterUser($email,$password) {
+    public function RegisterUser($email,$password,$id_role) {
         $checkEmail = $this->getConnection()->prepare("SELECT email from users WHERE email=? LIMIT 1");
         $checkEmail->execute(array($email));
         $result = $checkEmail->fetch();
         if($result != TRUE) {
-            $stmt = $this->getConnection()->prepare("INSERT INTO users (email,password) VALUES (:email,:password);");
+            $stmt = $this->getConnection()->prepare("INSERT INTO users (email,password,id_role) VALUES (:email,:password,:id_role);");
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':password', $password);
+            $stmt->bindParam(':id_role', $id_role);
             $result = $stmt->execute();
 
             $success = [];
@@ -59,6 +60,7 @@ class Users extends Database {
 
                 $_SESSION['email'] =  $result['email'];
                 $_SESSION['id'] =  $result['id'];
+                $_SESSION['id_role'] =  $result['id_role'];
                 header('Location: index.php?page=success');
                 exit;
              }
@@ -71,7 +73,7 @@ class Users extends Database {
      * @return array
      */
     public function ListUser() {
-        $stmt = "SELECT * FROM users";
+        $stmt = "SELECT u.id as id_user,u.email,r.name as role_name FROM users u INNER JOIN roles r ON u.id_role=r.id";
         $result = $this->getConnection()->query($stmt);
 
         if($result->rowCount() > 0){
@@ -87,7 +89,7 @@ class Users extends Database {
      * @return mixed
      */
     public function ShowUser($id) {
-        $stmt = "SELECT * FROM users WHERE id=$id LIMIT 1";
+        $stmt = "SELECT u.id as id_user,u.email as user_email,r.id as role_id,r.name as role_name FROM users u INNER JOIN roles r ON u.id_role=r.id WHERE u.id=$id LIMIT 1";
         $result = $this->getConnection()->query($stmt);
 
         if($result->rowCount() > 0){
@@ -103,10 +105,11 @@ class Users extends Database {
      * @param $id
      * @param $editPassword
      */
-    public function EditUserWithPassword($email,$id,$editPassword) {
-        $stmt = $this->getConnection()->prepare( "UPDATE users SET email= :email, password = :editPassword WHERE id= :id");
+    public function EditUserWithPassword($email,$id,$editPassword,$id_role) {
+        $stmt = $this->getConnection()->prepare( "UPDATE users SET email= :email, password = :editPassword, id_role= :id_role WHERE id= :id");
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':id_role', $id_role);
         $stmt->bindParam(':editPassword', $editPassword);
         $result = $stmt->execute();
 
@@ -124,10 +127,11 @@ class Users extends Database {
      * @param $email
      * @param $id
      */
-    public function EditUserWithoutPassword($email,$id) {
-        $stmt = $this->getConnection()->prepare( "UPDATE users SET email= :email WHERE id= :id");
+    public function EditUserWithoutPassword($email,$id,$id_role) {
+        $stmt = $this->getConnection()->prepare( "UPDATE users SET email= :email, id_role= :id_role WHERE id= :id");
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':id_role', $id_role);
         $result = $stmt->execute();
 
         $success = [];

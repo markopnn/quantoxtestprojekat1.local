@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 require_once  'vendor/autoload.php';
 function __autoload($class) {
     require_once "Config/$class.php";
@@ -29,6 +30,9 @@ switch($page){
         break;
     case "delete":
         include "Views/Delete.php";
+        break;
+    case "manager":
+        include "Views/Manager.php";
         break;
     default:
         include "Views/Login.php";

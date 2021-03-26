@@ -14,6 +14,7 @@ class UserController {
 
             $email = trim($_POST['email']);
             $id = trim($_POST['id']);
+            $id_role = trim($_POST['role']);
 
             $regex = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
 
@@ -32,9 +33,9 @@ class UserController {
 
                 if(trim($_POST['password']) !='') {
                     $editPassword = password_hash($_POST["password"], PASSWORD_DEFAULT);
-                    $result = $users->EditUserWithPassword($email,$id,$editPassword);
+                    $result = $users->EditUserWithPassword($email,$id,$editPassword,$id_role);
                 } else {
-                    $result = $users->EditUserWithoutPassword($email,$id);
+                    $result = $users->EditUserWithoutPassword($email,$id,$id_role);
                 }
             }
         }

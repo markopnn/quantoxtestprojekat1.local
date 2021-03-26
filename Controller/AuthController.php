@@ -31,6 +31,7 @@ class AuthController {
 
             $email = trim($_POST['email']);
             $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+            $id_role = $_POST['role'];
 
             $regex = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
 
@@ -46,7 +47,7 @@ class AuthController {
                 }
             }else{
                 $users = new Users();
-                $result = $users->registerUser($email,$password);
+                $result = $users->registerUser($email,$password,$id_role);
             }
         }
     }
