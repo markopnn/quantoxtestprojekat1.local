@@ -1,12 +1,15 @@
 <?php
 include_once "./Model/User.php";
-include("Controller/EditController.php");
+include("Controller/UserController.php");
 ?>
 
 <?php
 $id = $_GET['id'];
 $user = new Users();
 $row = $user->ShowUser($id);
+
+$update = new UserController();
+$update->update();
 ?>
 
 <div class="row">

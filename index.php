@@ -28,7 +28,7 @@ switch($page){
         include "Views/Edit.php";
         break;
     case "delete":
-        include "Controller/DeleteController.php";
+        include "Views/Delete.php";
         break;
     default:
         include "Views/Login.php";

@@ -1,10 +1,13 @@
 <?php
-include("Controller/RegisterController.php");
+include("Controller/AuthController.php");
 if(isset($_SESSION['email'])) {
     if ($_SESSION['email'] != '') {
         header('Location: index.php?page=success');
     }
 }
+
+$register = new AuthController();
+$register->RegisterController();
 ?>
 <div class="row">
     <div class="col-lg-12">
