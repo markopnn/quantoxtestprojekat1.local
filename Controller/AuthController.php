@@ -1,6 +1,6 @@
 <?php
 
-include_once "Model/User.php";
+include_once "Model/Auth.php";
 
 class AuthController {
 
@@ -19,7 +19,7 @@ class AuthController {
                     echo $error;
                 }
             }else{
-                $users = new Users();
+                $users = new Auth();
                 $result = $users->loginUser($email,$password);
             }
         }
@@ -46,7 +46,7 @@ class AuthController {
                     echo $error;
                 }
             }else{
-                $users = new Users();
+                $users = new Auth();
                 $result = $users->registerUser($email,$password,$id_role);
             }
         }
