@@ -97,7 +97,7 @@ class Users extends Database {
         try{
             $result = $stmt->execute();
             if ($result == TRUE) {
-                header('Location: index.php?page=success');
+                header('Location: index.php?page=admin');
             }
         }catch (Exception $e) {
             die("Oh noes! There's an error in the query!");

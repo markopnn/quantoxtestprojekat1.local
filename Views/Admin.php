@@ -9,7 +9,7 @@ include_once "./Model/User.php";
 <div class="row">
     <div class="col-lg-12">
         <div class="jumbotron">
-            <h1>List of users</h1>
+            <h1>Admin panel</h1>
         </div>
     </div>
 </div>
