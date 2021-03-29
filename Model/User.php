@@ -57,13 +57,14 @@ class Users extends Database {
         $stmt->bindParam(':editPassword', $editPassword);
         $result = $stmt->execute();
 
-        $success = [];
-        if ($result == TRUE) {
-            $success[] = "successful edit information";
+        // if user edit own profile , create new session
+        if($_SESSION['id'] == $id) {
+            unset($_SESSION['email']);
+            $_SESSION['email'] =  $email;
         }
-        if (count($success) > 0) {
-            foreach ($success as $msg)
-                echo $msg;
+
+        if ($result == TRUE) {
+            header('location: /admin');
         }
     }
 
@@ -78,13 +79,14 @@ class Users extends Database {
         $stmt->bindParam(':id_role', $id_role);
         $result = $stmt->execute();
 
-        $success = [];
-        if ($result == TRUE) {
-            header('Location: ' . $_SERVER['REQUEST_URI']);
+        // if user edit own profile , create new session
+        if($_SESSION['id'] == $id) {
+            unset($_SESSION['email']);
+            $_SESSION['email'] =  $email;
         }
-        if (count($success) > 0) {
-            foreach ($success as $msg)
-                echo $msg;
+
+        if ($result == TRUE) {
+            header('location: /admin');
         }
     }
 
@@ -97,7 +99,7 @@ class Users extends Database {
         try{
             $result = $stmt->execute();
             if ($result == TRUE) {
-                header('Location: /admin');
+                header('location: /admin');
             }
         }catch (Exception $e) {
             die("Oh noes! There's an error in the query!");

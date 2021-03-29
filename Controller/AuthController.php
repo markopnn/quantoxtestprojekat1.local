@@ -9,19 +9,9 @@ class AuthController {
             $email = trim($_POST['email']);
             $password = trim($_POST["password"]);
 
-            $errors= [];
-            if($email == '') {
-                $errors[] = "Check email";
-            }
+            $users = new Auth();
+            $result = $users->loginUser($email,$password);
 
-            if(count($errors) > 0) {
-                foreach($errors as $error) {
-                    echo $error;
-                }
-            }else{
-                $users = new Auth();
-                $result = $users->loginUser($email,$password);
-            }
         }
     }
 
@@ -35,20 +25,18 @@ class AuthController {
 
             $regex = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
 
-            if($email == '') {
-                $errors[] = "Check email";
+            if($email == '' || trim($_POST['password']) == '') {
+                $_SESSION['error'] = 'Email and password are required';
             }elseif (!preg_match($regex, $email)) {
-                $errors[] = "Invalid email format";
+                $_SESSION['error'] = 'Invalid email format';
             }
 
-            if(count($errors) > 0) {
-                foreach($errors as $error) {
-                    echo $error;
-                }
-            }else{
-                $users = new Auth();
-                $result = $users->registerUser($email,$password,$id_role);
+            if(!isset($_SESSION['error']))
+            {
+            $users = new Auth();
+            $result = $users->registerUser($email,$password,$id_role);
             }
+
         }
     }
 

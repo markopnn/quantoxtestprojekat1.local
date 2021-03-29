@@ -19,6 +19,14 @@ include "Views/Components/Nav.php";
 <div class="row">
     <div class="col-lg-12">
         <div class="jumbotron">
+            <?php if(isset($_SESSION['error'])) { ?>
+                <div class="alert alert-danger" role="alert">
+                    <?php
+                    echo $_SESSION['error'];
+                    unset($_SESSION['error']);
+                    ?>
+                </div>
+            <?php } ?>
             <form method="post">
                 <div class="form-group">
                     <label for="email">Email:</label>

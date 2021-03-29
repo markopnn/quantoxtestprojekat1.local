@@ -30,16 +30,11 @@ class Auth extends Database {
             $stmt->bindParam(':id_role', $id_role);
             $result = $stmt->execute();
 
-            $success = [];
             if ($result == TRUE) {
-                $success[] = "successful registration";
-            }
-            if (count($success) > 0) {
-                foreach ($success as $msg)
-                    echo $msg;
+                $_SESSION['success'] = 'Successful registration';
             }
         }else {
-            echo "Email exists";
+            $_SESSION['error'] = 'Email exists';
         }
     }
 
@@ -65,7 +60,7 @@ class Auth extends Database {
                 die;
             }
         } else {
-            Echo "Check email or password";
+            $_SESSION['error'] = 'Invalid email or password';
         }
     }
 }

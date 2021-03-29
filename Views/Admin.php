@@ -40,7 +40,7 @@ include "Views/Components/Nav.php";
         <td>
             <a href="admin/<?php echo $row['id_user'] ?>" type="button" class="btn btn-outline-success">Show</a>
             <a href="admin/<?php echo $row['id_user'] ?>/edit" class="btn btn-outline-primary">Edit</a>
-            <a href="admin/<?php echo $row['id_user'] ?>/delete" class="btn btn-outline-danger">Delete</a>
+            <a href="admin/<?php echo $row['id_user'] ?>/delete" class="btn btn-outline-danger" <?php if($_SESSION['id'] == $row['id_user']) { echo "style='pointer-events: none;'"; } ?> >Delete</a>
         </td>
     </tr>
     <?php }} ?>

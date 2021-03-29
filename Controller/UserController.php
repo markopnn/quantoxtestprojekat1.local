@@ -19,16 +19,13 @@ class UserController {
             $regex = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
 
             if($email == '') {
-                $errors[] = "Check email";
+                $_SESSION['error'] = 'Email and password are required';
             }elseif (!preg_match($regex, $email)) {
-                $errors[] = "Invalid email format";
+                $_SESSION['error'] = 'Invalid email format';
             }
 
-            if(count($errors) > 0) {
-                foreach($errors as $error) {
-                    echo $error;
-                }
-            }else{
+            if(!isset($_SESSION['error']))
+            {
                 $users = new Users();
 
                 if(trim($_POST['password']) !='') {
