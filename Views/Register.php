@@ -2,9 +2,11 @@
 
 if(isset($_SESSION['id_role'])) {
     if ($_SESSION['id_role'] == 1) {
-        header('location: index.php?page=success');
+        header('location: index.php?page=admin');
+        die;
     } elseif ($_SESSION['id_role'] == 2) {
         header('location: index.php?page=manager');
+        die;
     }
 }
 
@@ -12,7 +14,7 @@ include("Controller/AuthController.php");
 include("Model/Role.php");
 
 $register = new AuthController();
-$register->RegisterController();
+$register->register();
 ?>
 <div class="row">
     <div class="col-lg-12">

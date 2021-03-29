@@ -19,7 +19,7 @@ class Auth extends Database {
      * @param string $password
      *
      */
-    public function RegisterUser($email,$password,$id_role) {
+    public function registerUser ($email,$password,$id_role) {
         $checkEmail = $this->getConnection()->prepare("SELECT email from users WHERE email=? LIMIT 1");
         $checkEmail->execute(array($email));
         $result = $checkEmail->fetch();
@@ -47,7 +47,7 @@ class Auth extends Database {
      * @param string $email
      * @param string $password
      */
-    public function LoginUser($email,$password)
+    public function loginUser ($email,$password)
     {
 
         $stmt = $this->getConnection()->prepare("SELECT * FROM users WHERE email=? LIMIT 1 ");
@@ -62,7 +62,7 @@ class Auth extends Database {
                 $_SESSION['id'] =  $result['id'];
                 $_SESSION['id_role'] =  $result['id_role'];
                 header('Location: index.php?page=success');
-                exit;
+                die;
             }
         } else {
             Echo "Check email or password";

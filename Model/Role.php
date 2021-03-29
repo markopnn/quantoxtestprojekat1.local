@@ -13,7 +13,7 @@ class Role extends Database {
     /**
      * @return array
      */
-    public function ListRoles() {
+    public function listRoles() {
         $stmt = "SELECT * FROM roles";
         $result = $this->getConnection()->query($stmt);
 

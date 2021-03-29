@@ -4,7 +4,7 @@ include_once "Model/Auth.php";
 
 class AuthController {
 
-    public function LoginController() {
+    public function login() {
         if(isset($_POST['btnLogin'])){
             $email = trim($_POST['email']);
             $password = trim($_POST["password"]);
@@ -25,7 +25,7 @@ class AuthController {
         }
     }
 
-    public function RegisterController() {
+    public function register() {
         if(isset($_POST['btnRegister'])){
             $errors= [];
 

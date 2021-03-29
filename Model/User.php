@@ -16,7 +16,7 @@ class Users extends Database {
     /**
      * @return array
      */
-    public function ListUser() {
+    public function listUser() {
         $stmt = "SELECT u.id as id_user,u.email,r.name as role_name FROM users u INNER JOIN roles r ON u.id_role=r.id";
         $result = $this->getConnection()->query($stmt);
 
@@ -32,7 +32,7 @@ class Users extends Database {
      * @param $id
      * @return mixed
      */
-    public function ShowUser($id) {
+    public function showUser($id) {
         $stmt = "SELECT u.id as id_user,u.email as user_email,r.id as role_id,r.name as role_name FROM users u INNER JOIN roles r ON u.id_role=r.id WHERE u.id=$id LIMIT 1";
         $result = $this->getConnection()->query($stmt);
 
@@ -49,7 +49,7 @@ class Users extends Database {
      * @param $id
      * @param $editPassword
      */
-    public function EditUserWithPassword($email,$id,$editPassword,$id_role) {
+    public function editUserWithPassword($email,$id,$editPassword,$id_role) {
         $stmt = $this->getConnection()->prepare( "UPDATE users SET email= :email, password = :editPassword, id_role= :id_role WHERE id= :id");
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':id', $id);
@@ -59,7 +59,8 @@ class Users extends Database {
 
         $success = [];
         if ($result == TRUE) {
-            $success[] = "successful edit information";
+            header('Location: '.$_SERVER['PHP_SELF']);
+            die;
         }
         if (count($success) > 0) {
             foreach ($success as $msg)
@@ -71,7 +72,7 @@ class Users extends Database {
      * @param $email
      * @param $id
      */
-    public function EditUserWithoutPassword($email,$id,$id_role) {
+    public function editUserWithoutPassword($email,$id,$id_role) {
         $stmt = $this->getConnection()->prepare( "UPDATE users SET email= :email, id_role= :id_role WHERE id= :id");
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':id', $id);
@@ -80,7 +81,8 @@ class Users extends Database {
 
         $success = [];
         if ($result == TRUE) {
-            $success[] = "successful edit information";
+            header('Location: '.$_SERVER['REQUEST_URI']);
+            die;
         }
         if (count($success) > 0) {
             foreach ($success as $msg)
@@ -91,13 +93,14 @@ class Users extends Database {
     /**
      * @param $id
      */
-    public function DeleteUser($id) {
+    public function deleteUser($id) {
         $stmt = $this->getConnection()->prepare( "DELETE FROM users WHERE id= :id");
         $stmt->bindParam(':id', $id);
         try{
             $result = $stmt->execute();
             if ($result == TRUE) {
-                header('Location: index.php?page=success');
+                header('Location: ' . $_SERVER['HTTP_REFERER']);
+                exit;
             }
         }catch (Exception $e) {
             die("Oh noes! There's an error in the query!");

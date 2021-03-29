@@ -5,7 +5,7 @@
 <?php
     $id = $_GET['id'];
     $user = new Users();
-    $row = $user->ShowUser($id);
+    $row = $user->showUser($id);
 ?>
 <div class="container mt-5 d-flex justify-content-center">
     <div class="card p-3">

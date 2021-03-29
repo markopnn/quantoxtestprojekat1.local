@@ -2,6 +2,7 @@
 
 if($_SESSION['email'] == '' || $_SESSION['id_role'] == 2) {
     header('location: index.php?page=login');
+    die;
 }
 
 include_once "./Model/User.php";
@@ -9,7 +10,7 @@ include_once "./Model/User.php";
 <div class="row">
     <div class="col-lg-12">
         <div class="jumbotron">
-            <h1>List of users</h1>
+            <h1>Admin panel</h1>
         </div>
     </div>
 </div>
@@ -25,7 +26,7 @@ include_once "./Model/User.php";
     <tbody>
     <?php
     $users = new Users();
-    $rows = $users->ListUser();
+    $rows = $users->listUser();
         if($rows != NULL){
             foreach ($rows as $row) {
     ?>

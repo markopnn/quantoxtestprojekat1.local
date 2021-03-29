@@ -33,22 +33,21 @@ class UserController {
 
                 if(trim($_POST['password']) !='') {
                     $editPassword = password_hash($_POST["password"], PASSWORD_DEFAULT);
-                    $result = $users->EditUserWithPassword($email,$id,$editPassword,$id_role);
+                    $result = $users->editUserWithPassword($email,$id,$editPassword,$id_role);
                 } else {
-                    $result = $users->EditUserWithoutPassword($email,$id,$id_role);
+                    $result = $users->editUserWithoutPassword($email,$id,$id_role);
                 }
             }
         }
     }
 
     public function delete() {
-
         if( $_GET['id'] == $_SESSION['id']) {
             echo "You can't delete yourself";
         } elseif(isset($_GET['id'])){
             $id = $_GET['id'];
             $users = new Users();
-            $result = $users->DeleteUser($id);
+            $result = $users->deleteUser($id);
         }
     }
 
