@@ -5,7 +5,6 @@ if(isset($_SESSION['id_role'])) {
         header('location: index.php?page=admin');
     } elseif ($_SESSION['id_role'] == 2) {
         header('location: index.php?page=manager');
-        die;
     }
 }
 

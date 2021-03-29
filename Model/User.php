@@ -59,8 +59,7 @@ class Users extends Database {
 
         $success = [];
         if ($result == TRUE) {
-            header('Location: '.$_SERVER['PHP_SELF']);
-            die;
+            $success[] = "successful edit information";
         }
         if (count($success) > 0) {
             foreach ($success as $msg)
@@ -81,8 +80,7 @@ class Users extends Database {
 
         $success = [];
         if ($result == TRUE) {
-            header('Location: '.$_SERVER['REQUEST_URI']);
-            die;
+            $success[] = "successful edit information";
         }
         if (count($success) > 0) {
             foreach ($success as $msg)
@@ -99,8 +97,7 @@ class Users extends Database {
         try{
             $result = $stmt->execute();
             if ($result == TRUE) {
-                header('Location: ' . $_SERVER['HTTP_REFERER']);
-                exit;
+                header('Location: index.php?page=admin');
             }
         }catch (Exception $e) {
             die("Oh noes! There's an error in the query!");

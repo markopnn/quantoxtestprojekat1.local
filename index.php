@@ -19,8 +19,8 @@ switch($page){
     case "logout":
         include "Views/Logout.php";
         break;
-    case "success":
-        include "Views/Success.php";
+    case "admin":
+        include "Views/Admin.php";
         break;
     case "user":
         include "Views/User.php";
