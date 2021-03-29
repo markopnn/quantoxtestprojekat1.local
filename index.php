@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
 require_once  'vendor/autoload.php';
@@ -6,37 +7,62 @@ function __autoload($class) {
     require_once "Config/$class.php";
 }
 
-$page = "";
-if(isset($_GET['page'])){
-    $page = $_GET['page'];
-}
-include "Views/Components/Header.php";
-include "Views/Components/Nav.php";
-switch($page){
-    case "register":
-        include "Views/Register.php";
-        break;
-    case "logout":
-        include "Views/Logout.php";
-        break;
-    case "admin":
-        include "Views/Admin.php";
-        break;
-    case "user":
-        include "Views/User.php";
-        break;
-    case "edit":
-        include "Views/Edit.php";
-        break;
-    case "delete":
-        include "Views/Delete.php";
-        break;
-    case "manager":
-        include "Views/Manager.php";
-        break;
-    default:
-        include "Views/Login.php";
-        break;
-}
-include "Views/Components/Footer.php";
+// Include router class
+include('route.php');
+
+// Add base route (startpage) - login page
+Route::add('/',function(){
+   include_once 'Views/Login.php';
+}, 'get');
+Route::add('/',function(){
+    include_once 'Views/Login.php';
+},'post');
+
+// Logout session
+Route::add('/logout',function(){
+    include_once 'Controller/AuthController.php';
+    $logout = new AuthController();
+    $logout->logout();
+}, 'get');
+
+
+// Register page
+Route::add('/register',function(){
+    include_once 'Views/Register.php';
+}, 'get');
+Route::add('/register',function(){
+    include_once 'Views/Register.php';
+},'post');
+
+// Admin page
+Route::add('/admin',function(){
+    include_once 'Views/Admin.php';
+}, 'get');
+
+// Get profile of user
+Route::add('/admin/([0-9]*)',function($id){
+    include "Views/User.php";
+});
+
+// Edit profile page
+Route::add('/admin/([0-9]*)/edit',function($id){
+    include "Views/Edit.php";
+},'get');
+Route::add('/admin/([0-9]*)/edit',function($id){
+    include "Views/Edit.php";
+},'post');
+
+// Delete user
+Route::add('/admin/([0-9]*)/delete',function($id){
+    include_once 'Controller/UserController.php';
+    $delete = new UserController();
+    $delete->delete($id);
+}, 'get');
+
+// Manager page
+Route::add('/manager',function(){
+    include_once 'Views/Manager.php';
+}, 'get');
+
+Route::run('/');
 ?>

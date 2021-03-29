@@ -1,11 +1,18 @@
 <?php
     include_once "./Model/User.php";
-?>
 
+    if(isset($id))
+    {
+        $user = new Users();
+        $row = $user->showUser($id);
+        if($row == NULL) {
+            header('Location: / ');
+        }
+    }
+?>
 <?php
-    $id = $_GET['id'];
-    $user = new Users();
-    $row = $user->showUser($id);
+include "Views/Components/Header.php";
+include "Views/Components/Nav.php";
 ?>
 <div class="container mt-5 d-flex justify-content-center">
     <div class="card p-3">
@@ -18,3 +25,6 @@
         </div>
     </div>
 </div>
+<?php
+include "Views/Components/Footer.php";
+?>

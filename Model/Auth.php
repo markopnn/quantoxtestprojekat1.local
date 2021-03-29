@@ -61,8 +61,8 @@ class Auth extends Database {
                 $_SESSION['email'] =  $result['email'];
                 $_SESSION['id'] =  $result['id'];
                 $_SESSION['id_role'] =  $result['id_role'];
-                header('Location: index.php?page=success');
-                exit;
+                header('location: /');
+                die;
             }
         } else {
             Echo "Check email or password";

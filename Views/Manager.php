@@ -5,7 +5,10 @@ if($_SESSION['email'] == '') {
 }
 
 ?>
-
+<?php
+include "Views/Components/Header.php";
+include "Views/Components/Nav.php";
+?>
 <div class="row">
     <div class="col-lg-12">
         <div class="jumbotron">
@@ -13,3 +16,6 @@ if($_SESSION['email'] == '') {
         </div>
     </div>
 </div>
+<?php
+include "Views/Components/Footer.php";
+?>

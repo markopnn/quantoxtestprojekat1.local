@@ -41,12 +41,14 @@ class UserController {
         }
     }
 
-    public function delete() {
+    /**
+     * @param $id
+     */
+    public function delete($id) {
 
-        if( $_GET['id'] == $_SESSION['id']) {
+        if( $id == $_SESSION['id']) {
             echo "You can't delete yourself";
-        } elseif(isset($_GET['id'])){
-            $id = $_GET['id'];
+        } elseif(isset($id)){
             $users = new Users();
             $result = $users->deleteUser($id);
         }

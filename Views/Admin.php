@@ -6,6 +6,10 @@ if($_SESSION['email'] == '' || $_SESSION['id_role'] == 2) {
 
 include_once "./Model/User.php";
 ?>
+<?php
+include "Views/Components/Header.php";
+include "Views/Components/Nav.php";
+?>
 <div class="row">
     <div class="col-lg-12">
         <div class="jumbotron">
@@ -25,7 +29,7 @@ include_once "./Model/User.php";
     <tbody>
     <?php
     $users = new Users();
-    $rows = $users->ListUser();
+    $rows = $users->listUser();
         if($rows != NULL){
             foreach ($rows as $row) {
     ?>
@@ -33,13 +37,16 @@ include_once "./Model/User.php";
         <td scope="row"> <?php echo $row['id_user']; ?></td>
         <td><?php echo $row['email']; ?></td>
         <th scope="row"><?php echo $row['role_name']; ?></th>
-        <td><a href="index.php?page=user&id=<?php echo $row['id_user'] ?>" type="button" class="btn btn-outline-success">Show</a>
-            <a href="index.php?page=edit&id=<?php echo $row['id_user'] ?>" class="btn btn-outline-primary">Edit</a>
-            <a href="index.php?page=delete&id=<?php echo $row['id_user'] ?>" class="btn btn-outline-danger">Delete</a>
+        <td>
+            <a href="admin/<?php echo $row['id_user'] ?>" type="button" class="btn btn-outline-success">Show</a>
+            <a href="admin/<?php echo $row['id_user'] ?>/edit" class="btn btn-outline-primary">Edit</a>
+            <a href="admin/<?php echo $row['id_user'] ?>/delete" class="btn btn-outline-danger">Delete</a>
         </td>
     </tr>
     <?php }} ?>
     </tbody>
 </table>
-
+<?php
+include "Views/Components/Footer.php";
+?>
 

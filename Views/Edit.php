@@ -2,21 +2,24 @@
 include("Controller/UserController.php");
 include_once "./Model/User.php";
 include_once "./Model/Role.php";
-?>
 
+    if(isset($id))
+    {
+        $user = new Users();
+        $row = $user->ShowUser($id);
+
+        $update = new UserController();
+        $update->update();
+    }
+?>
 <?php
-$id = $_GET['id'];
-$user = new Users();
-$row = $user->ShowUser($id);
-
-$update = new UserController();
-$update->update();
+include "Views/Components/Header.php";
+include "Views/Components/Nav.php";
 ?>
-
 <div class="row">
     <div class="col-lg-12">
         <div class="jumbotron">
-            <form method="post" action="index.php?page=edit&id=<?php echo $row['id_user'] ?>">
+            <form method="post">
                 <div class="form-group">
                     <label for="email">Email:</label>
                     <input type="text" class="form-control" name="email" placeholder="Enter email" value="<?php echo $row['user_email'] ?>">
@@ -44,4 +47,6 @@ $update->update();
         </div>
     </div>
 </div>
-
+<?php
+include "Views/Components/Footer.php";
+?>

@@ -80,7 +80,7 @@ class Users extends Database {
 
         $success = [];
         if ($result == TRUE) {
-            $success[] = "successful edit information";
+            header('Location: ' . $_SERVER['REQUEST_URI']);
         }
         if (count($success) > 0) {
             foreach ($success as $msg)
@@ -97,7 +97,7 @@ class Users extends Database {
         try{
             $result = $stmt->execute();
             if ($result == TRUE) {
-                header('Location: index.php?page=admin');
+                header('Location: /admin');
             }
         }catch (Exception $e) {
             die("Oh noes! There's an error in the query!");
