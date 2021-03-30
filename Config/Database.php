@@ -1,7 +1,7 @@
 <?php
 
 
-$dotenv = Dotenv\Dotenv::createImmutable($_SERVER['DOCUMENT_ROOT']);
+$dotenv = Dotenv\Dotenv::createImmutable('/var/www/quantoxtestprojekat1.local');
 $dotenv->load();
 
 
