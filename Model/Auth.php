@@ -1,7 +1,8 @@
 <?php
 
-include ('Config/Database.php');
+namespace app\Model;
 
+use app\Config\Database;
 /**
  * Class Auth
  * The class use for login and register user.

@@ -1,6 +1,6 @@
 <?php
 
-include ('Config/Database.php');
+include('Config/Database.php');
 
 /**
  * Class Users
