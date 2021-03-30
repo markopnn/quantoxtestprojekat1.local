@@ -12,6 +12,13 @@
                 <a class="nav-link" href="/register">Register</a>
             </li>
             <?php } ?>
+            <?php if(!isset($_SESSION['id_role'])=='') {
+                if($_SESSION['id_role'] == 1) {
+                ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/tickets">Tickets</a>
+                </li>
+            <?php }} ?>
             <?php if(!isset($_SESSION['email'])=='') { ?>
             <li class="nav-item">
                 <a class="nav-link" href="/logout">Logout</a>

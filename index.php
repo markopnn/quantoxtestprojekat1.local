@@ -64,5 +64,23 @@ Route::add('/manager',function(){
     include_once 'Views/Manager.php';
 }, 'get');
 
+//tickets
+Route::add('/tickets',function(){
+    include_once 'Views/Tickets.php';
+}, 'get');
+Route::add('/tickets',function(){
+    include_once 'Views/Tickets.php';
+},'post');
+Route::add('/tickets/([0-9]*)/delete',function($id){
+    include_once 'Controller/TicketController.php';
+    $delete = new TicketController();
+    $delete->delete($id);
+}, 'get');
+Route::add('/tickets/edit',function(){
+    include_once 'Controller/TicketController.php';
+    $delete = new TicketController();
+    $delete->update();
+}, 'post');
+
 Route::run('/');
 ?>

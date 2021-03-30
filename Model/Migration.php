@@ -12,7 +12,7 @@ include('Config/Database.php');
  */
 class Migration extends Database {
     public function delete() {
-        $stmt = $this->getConnection()->prepare( "DELETE FROM users WHERE id=8");
+        $stmt = $this->getConnection()->prepare( "DELETE FROM users WHERE id=10");
         $result = $stmt->execute();
     }
 }

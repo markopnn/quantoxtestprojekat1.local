@@ -33,15 +33,9 @@ class Users extends Database {
      * @return mixed
      */
     public function showUser($id) {
-        $stmt = "SELECT u.id as id_user,u.email as user_email,r.id as role_id,r.name as role_name FROM users u INNER JOIN roles r ON u.id_role=r.id WHERE u.id=$id LIMIT 1";
-        $result = $this->getConnection()->query($stmt);
-
-        if($result->rowCount() > 0){
-            while($row = $result->fetch()){
-                $data = $row;
-            }
-            return $data;
-        }
+        $stmt = $this->getConnection()->prepare("SELECT u.id as id_user,u.email as user_email,r.id as role_id,r.name as role_name FROM users u INNER JOIN roles r ON u.id_role=r.id WHERE u.id=? LIMIT 1");
+        $stmt->execute(array($id));
+        return  $data = $stmt->fetch();
     }
 
     /**

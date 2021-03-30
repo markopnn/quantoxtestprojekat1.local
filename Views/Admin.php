@@ -1,7 +1,7 @@
 <?php
 
 if($_SESSION['email'] == '' || $_SESSION['id_role'] == 2) {
-    header('location: index.php?page=login');
+    header('location: /');
 }
 
 include_once "./Model/User.php";
