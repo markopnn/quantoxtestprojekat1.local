@@ -1,6 +1,5 @@
 <?php
 
-namespace app\config;
 
 $dotenv = Dotenv\Dotenv::createImmutable($_SERVER['DOCUMENT_ROOT']);
 $dotenv->load();

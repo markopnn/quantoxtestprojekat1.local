@@ -1,13 +1,10 @@
 <?php
 
-namespace app\Model;
+include ('Config/Database.php');
 
-use app\Config\Database;
 /**
  * Class Auth
  * The class use for login and register user.
- *
- * @package    quantoxtestprojekat1.local
  * @author     Marko Milojkovic <marko.milojkovic@quantox.com>
  *
  *
@@ -45,7 +42,6 @@ class Auth extends Database {
      */
     public function loginUser($email,$password)
     {
-
         $stmt = $this->getConnection()->prepare("SELECT * FROM users WHERE email=? LIMIT 1 ");
         $stmt->execute(array($email));
         $result = $stmt->fetch();
