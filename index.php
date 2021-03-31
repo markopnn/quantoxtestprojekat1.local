@@ -69,7 +69,9 @@ Route::add('/tickets',function(){
     include_once 'Views/Tickets.php';
 }, 'get');
 Route::add('/tickets',function(){
-    include_once 'Views/Tickets.php';
+    include_once 'Controller/TicketController.php';
+    $create = new TicketController();
+    $create->create();
 },'post');
 Route::add('/tickets/([0-9]*)/delete',function($id){
     include_once 'Controller/TicketController.php';

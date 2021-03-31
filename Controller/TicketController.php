@@ -5,24 +5,15 @@ include_once "Model/Ticket.php";
 class TicketController {
 
     public function create() {
-        if(isset($_POST['btnCreateTickets'])){
 
-            $name = trim($_POST['name']);
-            $description = trim($_POST['description']);
-            $created_at = date('Y/m/d H:i:s');
-            $created_by = (int)$_SESSION['id_role'];
+        $name = trim($_POST['name']);
+        $description = trim($_POST['description']);
+        $created_at = date('Y/m/d H:i:s');
+        $created_by = (int)$_SESSION['id_role'];
 
-            if($name == '') {
-                $_SESSION['error'] = 'Name of tickets is required';
-            }
+        $create = new Ticket();
+        $result = $create->createTicket($name,$description,$created_at,$created_by);
 
-            if(!isset($_SESSION['error']))
-            {
-                $create = new Ticket();
-                $result = $create->createTicket($name,$description,$created_at,$created_by);
-            }
-
-        }
     }
 
     public function update() {

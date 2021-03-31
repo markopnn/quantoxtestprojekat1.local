@@ -48,7 +48,6 @@ class Ticket extends Database {
                 $actionLog = new Ticket();
                 $actionLog->actionLog($action);
 
-                $_SESSION['success'] = 'Successful create ticket';
             }
     }
 

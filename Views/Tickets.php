@@ -8,8 +8,6 @@ if($_SESSION['email'] == '' || $_SESSION['id_role'] == 2) {
     header('location: /');
 }
 
-$create = new TicketController();
-$create->create();
 
 if(isset($id))
 {
@@ -20,6 +18,8 @@ $ticket->showTicket($id);
     <div class="row">
         <div class="col-lg-12">
             <div class="jumbotron">
+                <div id="success" class="alert alert-success" role="alert" style="display:none;">
+                </div>
                 <?php if(isset($_SESSION['success'])) { ?>
                     <div class="alert alert-success" role="alert">
                         <?php
@@ -39,14 +39,14 @@ $ticket->showTicket($id);
                 <form method="post">
                     <div class="form-group">
                         <label for="email">Name of tickets:</label>
-                        <input type="text" class="form-control" name="name" placeholder="Name of tickets" ">
+                        <input id="nameTicket" type="text" class="form-control" name="name" placeholder="Name of tickets" ">
                     </div>
                     <div class="form-group">
                         <label for="password">Description:</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="description" placeholder="Enter description for the tickets"></textarea>
+                        <textarea id="descriptionTicket" class="form-control" rows="5" name="description" placeholder="Enter description for the tickets"></textarea>
                     </div>
                     <input type="hidden" class="form-control" name="id" >
-                    <button type="submit" name="btnCreateTickets" class="btn btn-primary">Create tickets</button>
+                    <button onclick="create()" type="submit" name="btnCreateTickets" class="btn btn-primary">Create tickets</button>
                 </form>
             </div>
         </div>
@@ -110,38 +110,7 @@ $ticket->showTicket($id);
             </div>
         </div>
     </div>
-
-    <script>
-        function edit(id)
-        {
-            // using this page stop being refreshing
-            event.preventDefault();
-            var formData = {
-                name: $("#name"+id).val(),
-                description: $("#descriptionEdit"+id).val(),
-                id_ticket: $("#id_ticket"+id).val()
-            };
-            $.ajax({
-                type: 'POST',
-                url: '/tickets/edit',
-                data: formData,
-                success: function () {
-                    document.getElementById("success"+id).innerHTML="Successeful edit ticket";
-                    $("#target_input_id").val(formData);
-                }
-            });
-        }
-        function del(id)
-        {
-            $.ajax({
-                type: 'GET',
-                url: '/tickets/'+id+'/delete',
-                success: function () {
-                    $("#card-deck").load(location.href+" #card-deck>*","");
-                }
-            });
-        }
-    </script>
+<script type="text/javascript" src="/js/main.js"></script>
 <?php
 include "Views/Components/Footer.php";
 ?>
