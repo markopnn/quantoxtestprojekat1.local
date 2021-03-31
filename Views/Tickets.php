@@ -43,7 +43,7 @@ $ticket->showTicket($id);
                 </div>
                 <div class="form-group">
                     <label for="password">Description:</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="description">dddd</textarea>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="description" placeholder="Enter description for the tickets"></textarea>
                 </div>
                 <input type="hidden" class="form-control" name="id" >
                 <button type="submit" name="btnCreateTickets" class="btn btn-primary">Create tickets</button>
@@ -88,16 +88,17 @@ $ticket->showTicket($id);
                                                     <form method="post" class="update">
                                                         <div class="form-group">
                                                             <label for="email">Name of tickets:</label>
-                                                            <input type="text" class="form-control" id="name" name="name" placeholder="Name of tickets" value="<?php echo $row['ticket_name']; ?>">
+                                                            <input type="text" class="form-control" id="name<?php echo $row['id_tickets'] ?>" name="name" placeholder="Name of tickets" value="<?php echo $row['ticket_name']; ?>">
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="description">Description:</label>
-                                                            <textarea class="form-control" id="descriptionEdit" rows="5" name="descriptionEdit"><?php echo $row['description']; ?></textarea>
+                                                            <textarea class="form-control" id="descriptionEdit<?php echo $row['id_tickets'] ?>" rows="5" name="descriptionEdit"><?php echo $row['description']; ?></textarea>
                                                         </div>
-                                                        <input id="id_ticket" type="hidden" value="<?php echo $row['id_tickets'] ?>">
+                                                        <input id="id_ticket<?php echo $row['id_tickets'] ?>" type="hidden" value="<?php echo $row['id_tickets'] ?>">
                                                         <input type="hidden" class="form-control" name="id" >
                                                         <button type="submit" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        <button type="submit" name="btnEditTicket" class="btn btn-primary">Edit</button>
+                                                        <button type="submit" name="btnEditTicket" class="btn btn-primary" onclick="edit(<?php echo $row['id_tickets'] ?>)">Edit</button>
+                                                        <p id="success<?php echo $row['id_tickets'] ?>" class="mt-3" style="color:green;"></p>
                                                     </form>
                                                 </div>
                                             </div>
@@ -111,25 +112,24 @@ $ticket->showTicket($id);
     </div>
 </div>
     <script>
-        $(function () {
-            $('.update').bind('click', function (event) {
-                // using this page stop being refreshing
-                event.preventDefault();
-                var formData = {
-                    name: $("#name").val(),
-                    description: $("#descriptionEdit").val(),
-                    id_ticket: $("#id_ticket").val()
-                };
-                $.ajax({
-                    type: 'POST',
-                    url: '/tickets/edit',
-                    data: formData,
-                    success: function () {
-
-                    }
-                });
+        function edit(id)
+        {
+            // using this page stop being refreshing
+            event.preventDefault();
+            var formData = {
+                name: $("#name"+id).val(),
+                description: $("#descriptionEdit"+id).val(),
+                id_ticket: $("#id_ticket"+id).val()
+            };
+            $.ajax({
+                type: 'POST',
+                url: '/tickets/edit',
+                data: formData,
+                success: function () {
+                    document.getElementById("success"+id).innerHTML="Successeful edit ticket";
+                }
             });
-        });
+        }
     </script>
 <?php
 include "Views/Components/Footer.php";

@@ -26,7 +26,6 @@ class TicketController {
     }
 
     public function update() {
-
         $name = $_POST['name'];
         $description = $_POST['description'];
         $id_ticket = $_POST['id_ticket'];
