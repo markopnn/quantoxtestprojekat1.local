@@ -54,7 +54,7 @@ $ticket->showTicket($id);
     <div class="row">
         <div class="col-lg-12">
             <div class="jumbotron">
-                                <div class="card-deck">
+                                <div class="card-deck" id="card-deck">
                                     <?php
                                     $tickets = new Ticket();
                                     $rows = $tickets->listTickets();
@@ -67,7 +67,7 @@ $ticket->showTicket($id);
                                                     <p class="card-text"><?php echo $row['description']; ?></p>
                                                     <p class="card-text"><small class="text-muted">Created at: <?php echo $row['created_at']; ?></small><br><small class="text-muted">Created by: <?php echo $row['email_user']; ?></small></p>
                                                     <a class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal<?php echo $row['id_tickets'] ?>">Edit</a>
-                                                    <a href="tickets/<?php echo $row['id_tickets'] ?>/delete" class="btn btn-outline-danger" >Delete</a>
+                                                    <a onclick="del(<?php echo $row['id_tickets'] ?>)" class="btn btn-outline-danger" >Delete</a>
                                                 </div>
                                             </div>
                                             <!-- Modal -->
@@ -128,6 +128,16 @@ $ticket->showTicket($id);
                 success: function () {
                     document.getElementById("success"+id).innerHTML="Successeful edit ticket";
                     $("#target_input_id").val(formData);
+                }
+            });
+        }
+        function del(id)
+        {
+            $.ajax({
+                type: 'GET',
+                url: '/tickets/'+id+'/delete',
+                success: function () {
+                    $("#card-deck").load(location.href+" #card-deck>*","");
                 }
             });
         }
