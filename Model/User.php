@@ -58,6 +58,20 @@ class Users extends Database {
         }
 
         if ($result == TRUE) {
+
+            //action_log
+            $user = new Users();
+            $row = $user->showUser($id);
+            $profile =  $row['user_email'];
+            $action = "Edit profile".$profile;
+            $id_user = $_SESSION['id'];
+            $created_at = date('Y/m/d H:i:s');
+            $stmt = $this->getConnection()->prepare( "INSERT INTO action_log (action,id_user,created_at) VALUES (:action,:id_user,:created_at)");
+            $stmt->bindParam(':action', $action);
+            $stmt->bindParam(':id_user', $id_user);
+            $stmt->bindParam(':created_at', $created_at);
+            $action_log = $stmt->execute();
+
             header('location: /admin');
         }
     }
@@ -80,6 +94,20 @@ class Users extends Database {
         }
 
         if ($result == TRUE) {
+           
+            //action_log
+            $user = new Users();
+            $row = $user->showUser($id);
+            $profile =  $row['user_email'];
+            $action = "Edit profile: ".$profile;
+            $id_user = $_SESSION['id'];
+            $created_at = date('Y/m/d H:i:s');
+            $stmt = $this->getConnection()->prepare( "INSERT INTO action_log (action,id_user,created_at) VALUES (:action,:id_user,:created_at)");
+            $stmt->bindParam(':action', $action);
+            $stmt->bindParam(':id_user', $id_user);
+            $stmt->bindParam(':created_at', $created_at);
+            $action_log = $stmt->execute();
+            
             header('location: /admin');
         }
     }
@@ -91,8 +119,25 @@ class Users extends Database {
         $stmt = $this->getConnection()->prepare( "DELETE FROM users WHERE id= :id");
         $stmt->bindParam(':id', $id);
         try{
+
+            //action_log
+            $user = new Users();
+            $row = $user->showUser($id);
+            $profile =  $row['user_email'];
+            $action = "Delete profile: ".$profile;
+            $id_user = $_SESSION['id'];
+            $created_at = date('Y/m/d H:i:s');
+
             $result = $stmt->execute();
             if ($result == TRUE) {
+
+                //action log
+                $stmt = $this->getConnection()->prepare( "INSERT INTO action_log (action,id_user,created_at) VALUES (:action,:id_user,:created_at)");
+                $stmt->bindParam(':action', $action);
+                $stmt->bindParam(':id_user', $id_user);
+                $stmt->bindParam(':created_at', $created_at);
+                $result = $stmt->execute();
+
                 header('location: /admin');
             }
         }catch (Exception $e) {

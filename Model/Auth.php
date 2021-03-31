@@ -53,6 +53,17 @@ class Auth extends Database {
                 $_SESSION['email'] =  $result['email'];
                 $_SESSION['id'] =  $result['id'];
                 $_SESSION['id_role'] =  $result['id_role'];
+
+                //action_log
+                $action = "Login to site";
+                $id_user = $_SESSION['id'];
+                $created_at = date('Y/m/d H:i:s');
+                $stmt = $this->getConnection()->prepare( "INSERT INTO action_log (action,id_user,created_at) VALUES (:action,:id_user,:created_at)");
+                $stmt->bindParam(':action', $action);
+                $stmt->bindParam(':id_user', $id_user);
+                $stmt->bindParam(':created_at', $created_at);
+                $result = $stmt->execute();
+
                 header('location: /');
                 die;
             }
