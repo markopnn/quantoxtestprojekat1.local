@@ -11,9 +11,33 @@ include('Config/Database.php');
  *
  */
 class Migration extends Database {
-    public function delete() {
-        $stmt = $this->getConnection()->prepare( "DELETE FROM users WHERE id=10");
-        $result = $stmt->execute();
+    public function create() {
+       $table ="create table users
+        (
+            id  int auto_increment primary key,
+            email varchar(255) not null,
+            password varchar(255) not null,
+            id_role  int null
+        );
+        create table tickets
+        (
+            id int auto_increment primary key,
+            name text null,
+            description text null,
+            created_at  datetime null,
+            created_by  int  null
+        );
+        create table roles
+        (
+            id int auto_increment primary key,
+            name varchar(20) not null
+        );
+        ";
+       try {
+           $this->getConnection()->query($table);
+       }catch (PDOException $ex) {
+
+       }
     }
 }
 ?>

@@ -38,7 +38,7 @@ class MigrationCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $result = new Migration();
-        $result->delete();
+        $result->create();
 
         $name = $input->getArgument($this->commandArgumentName);
         $text = 'Successful migration';
