@@ -127,6 +127,7 @@ $ticket->showTicket($id);
                 data: formData,
                 success: function () {
                     document.getElementById("success"+id).innerHTML="Successeful edit ticket";
+                    $("#target_input_id").val(formData);
                 }
             });
         }
