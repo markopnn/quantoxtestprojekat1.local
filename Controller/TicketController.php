@@ -33,6 +33,9 @@ class TicketController {
         $update->updateTicket($name,$description,$id_ticket);
     }
 
+    /**
+     * @param $id
+     */
     public function delete($id) {
         $ticket = new Ticket();
         $result = $ticket->deleteTicket($id);

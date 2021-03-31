@@ -41,6 +41,11 @@ class AuthController {
     }
 
     public function logout() {
+
+        $action = 'Logout from site';
+        $actionLog = new Auth();
+        $actionLog->actionLog($action);
+
         session_start();
         session_destroy();
 

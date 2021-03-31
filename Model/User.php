@@ -59,18 +59,14 @@ class Users extends Database {
 
         if ($result == TRUE) {
 
-            //action_log
+            //variable for action_log
             $user = new Users();
             $row = $user->showUser($id);
             $profile =  $row['user_email'];
-            $action = "Edit profile".$profile;
-            $id_user = $_SESSION['id'];
-            $created_at = date('Y/m/d H:i:s');
-            $stmt = $this->getConnection()->prepare( "INSERT INTO action_log (action,id_user,created_at) VALUES (:action,:id_user,:created_at)");
-            $stmt->bindParam(':action', $action);
-            $stmt->bindParam(':id_user', $id_user);
-            $stmt->bindParam(':created_at', $created_at);
-            $action_log = $stmt->execute();
+            $action = "Edit profile: ".$profile;
+
+            $actionLog = new Users();
+            $actionLog->actionLog($action);
 
             header('location: /admin');
         }
@@ -95,18 +91,15 @@ class Users extends Database {
 
         if ($result == TRUE) {
            
-            //action_log
+            //variable for action_log
             $user = new Users();
             $row = $user->showUser($id);
             $profile =  $row['user_email'];
             $action = "Edit profile: ".$profile;
-            $id_user = $_SESSION['id'];
-            $created_at = date('Y/m/d H:i:s');
-            $stmt = $this->getConnection()->prepare( "INSERT INTO action_log (action,id_user,created_at) VALUES (:action,:id_user,:created_at)");
-            $stmt->bindParam(':action', $action);
-            $stmt->bindParam(':id_user', $id_user);
-            $stmt->bindParam(':created_at', $created_at);
-            $action_log = $stmt->execute();
+
+            $actionLog = new Users();
+            $actionLog->actionLog($action);
+
             
             header('location: /admin');
         }
@@ -120,29 +113,43 @@ class Users extends Database {
         $stmt->bindParam(':id', $id);
         try{
 
-            //action_log
+            //variable for action_log
+
             $user = new Users();
             $row = $user->showUser($id);
             $profile =  $row['user_email'];
             $action = "Delete profile: ".$profile;
-            $id_user = $_SESSION['id'];
-            $created_at = date('Y/m/d H:i:s');
+
+
 
             $result = $stmt->execute();
             if ($result == TRUE) {
 
                 //action log
-                $stmt = $this->getConnection()->prepare( "INSERT INTO action_log (action,id_user,created_at) VALUES (:action,:id_user,:created_at)");
-                $stmt->bindParam(':action', $action);
-                $stmt->bindParam(':id_user', $id_user);
-                $stmt->bindParam(':created_at', $created_at);
-                $result = $stmt->execute();
+                $actionLog = new Users();
+                $actionLog->actionLog($action);
 
                 header('location: /admin');
             }
         }catch (Exception $e) {
             die("Oh noes! There's an error in the query!");
         }
+    }
+
+    /**
+     * @param $action
+     */
+    public function actionLog($action)
+    {
+
+        $created_at = date('Y/m/d H:i:s');
+        $id_user = $_SESSION['id'];
+
+        $stmt = $this->getConnection()->prepare( "INSERT INTO action_log (action,id_user,created_at) VALUES (:action,:id_user,:created_at)");
+        $stmt->bindParam(':action', $action);
+        $stmt->bindParam(':id_user', $id_user);
+        $stmt->bindParam(':created_at', $created_at);
+        $action_log = $stmt->execute();
     }
 }
 ?>

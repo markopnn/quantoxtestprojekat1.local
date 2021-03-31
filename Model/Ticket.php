@@ -44,13 +44,9 @@ class Ticket extends Database {
 
                 //action_log
                 $action = "Created ticket: ".$name;
-                $id_user = $_SESSION['id'];
-                $created_at = date('Y/m/d H:i:s');
-                $stmt = $this->getConnection()->prepare( "INSERT INTO action_log (action,id_user,created_at) VALUES (:action,:id_user,:created_at)");
-                $stmt->bindParam(':action', $action);
-                $stmt->bindParam(':id_user', $id_user);
-                $stmt->bindParam(':created_at', $created_at);
-                $action_log = $stmt->execute();
+                $action = "Create ticket: ".$name;
+                $actionLog = new Ticket();
+                $actionLog->actionLog($action);
 
                 $_SESSION['success'] = 'Successful create ticket';
             }
@@ -64,23 +60,19 @@ class Ticket extends Database {
         $stmt->bindParam(':id', $id);
         try{
 
-            //action_log
+            //variable for action_log
             $ticket = new Ticket();
             $row = $ticket->showTicket($id);
             $name =  $row['ticket_name'];
             $action = "Delete ticket: ".$name;
-            $id_user = $_SESSION['id'];
-            $created_at = date('Y/m/d H:i:s');
 
             $result = $stmt->execute();
             if ($result == TRUE) {
 
-                //action log
-                $stmt = $this->getConnection()->prepare( "INSERT INTO action_log (action,id_user,created_at) VALUES (:action,:id_user,:created_at)");
-                $stmt->bindParam(':action', $action);
-                $stmt->bindParam(':id_user', $id_user);
-                $stmt->bindParam(':created_at', $created_at);
-                $result = $stmt->execute();
+                //action_log
+                $action = "Delete ticket: ".$name;
+                $actionLog = new Ticket();
+                $actionLog->actionLog($action);
 
                 header('location: /tickets');
             }
@@ -111,14 +103,23 @@ class Ticket extends Database {
          {
              //action_log
              $action = "Edit ticket: ".$name;
-             $id_user = $_SESSION['id'];
-             $created_at = date('Y/m/d H:i:s');
-             $stmt = $this->getConnection()->prepare( "INSERT INTO action_log (action,id_user,created_at) VALUES (:action,:id_user,:created_at)");
-             $stmt->bindParam(':action', $action);
-             $stmt->bindParam(':id_user', $id_user);
-             $stmt->bindParam(':created_at', $created_at);
-             $action_log = $stmt->execute();
+             $actionLog = new Ticket();
+             $actionLog->actionLog($action);
          }
      }
+
+    /**
+     * @param $action
+     */
+    public function actionLog($action)
+    {
+        $id_user = $_SESSION['id'];
+        $created_at = date('Y/m/d H:i:s');
+        $stmt = $this->getConnection()->prepare( "INSERT INTO action_log (action,id_user,created_at) VALUES (:action,:id_user,:created_at)");
+        $stmt->bindParam(':action', $action);
+        $stmt->bindParam(':id_user', $id_user);
+        $stmt->bindParam(':created_at', $created_at);
+        $action_log = $stmt->execute();
+    }
 }
 ?>
